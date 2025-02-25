@@ -21,19 +21,22 @@ WORKDIR /home/${container_user}
 USER ${container_user}
 
 ENV MYDIR=`pwd`
-ENV DATE="$(date --utc +%FT%T.%3NZ)"
+ENV DATE='$(date --utc +%FT%T.%3NZ)'
 ENV ENABLE_INSECURE=false
 ENV MODULE=
 
 
-ENV db-server=
+ENV db-host=
 ENV db-port=
 ENV db-su-user=
 ENV postgres-password=
+ENV pre-expiry-days=
+ENV mosip_pms_client_secret=
+ENV mosip-api-internal-host=
+ENV PARTNER_IDS_ENV=
 
-COPY partner.properties .
 COPY requirements.txt .
 COPY checkupdate.py .
-COPY bootstrap.properties .
+
 RUN pip install --no-cache-dir -r requirements.txt
-CMD ["python", "checkupdate.py"]
+CMD ["python3", "checkupdate.py"]
